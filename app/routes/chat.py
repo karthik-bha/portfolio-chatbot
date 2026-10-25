@@ -1,10 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
-
+from app.schemas import ChatRequest
+from app.core.rate_limit import limiter 
+from app.config import settings
 from app.services.llm import stream_reply
 
 router = APIRouter()
 
 @router.post("/chat")
-async def chat(req):
-    return StreamingResponse(stream_reply(req.history), media_type="text/event-stream")
+@limiter.limit(settings.rate_limit)
+async def chat(request: Request, req : ChatRequest):
+    return StreamingResponse(stream_reply(req.messages), media_type="text/event-stream")

@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     
     # required: app wont start without this
     gemini_api_key: str 
-    gemini_model: str
+    gemini_models: list[str]
 
     # defaults
     allowed_origins: list[str] = ["http://localhost:3000"]

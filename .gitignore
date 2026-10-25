@@ -28,3 +28,7 @@ evals/results/
 .idea/
 .DS_Store
 Thumbs.db
+
+#misc
+check_models.py
+list_models.py
