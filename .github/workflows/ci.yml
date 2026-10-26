@@ -1,0 +1,22 @@
+name: CI 
+
+# when to run
+on:
+    push:
+        # on pushes to main
+        branches: [main]
+    pull_request:
+
+jobs:
+    test:                                   # a job named "test"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4        # copies repo onto the VM
+            - uses: actions/setup-python@v5    # installs Python 3.12
+              with:
+                python-version: "3.12"
+                cache: pip
+                cache-dependency-path: requirements*.txt
+            - run: pip install -r requirements-dev.txt
+            - run: ruff check .
+            - run: pytest
