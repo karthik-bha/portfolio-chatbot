@@ -1,6 +1,9 @@
-from google import genai
-from google.genai import types, errors
 import logging
+from pathlib import Path
+
+from google import genai
+from google.genai import errors, types
+
 from app.config import settings
 from app.schemas import Message
 
@@ -11,7 +14,8 @@ logger = logging.getLogger(__name__)
 RETRYABLE = {429, 500, 503, 504}
 FALLBACK_TEXT = "\n\nSorry, something went wrong on my end. Please try again in a moment."
 
-SYSTEM_PROMPT = open("app/prompts/system_prompt.md", encoding="utf-8").read()
+PROMPT_PATH = Path(__file__).resolve().parent.parent / "prompts" / "system_prompt.md"
+SYSTEM_PROMPT = PROMPT_PATH.read_text(encoding="utf-8")
 
 CONFIG=types.GenerateContentConfig(
     system_instruction=SYSTEM_PROMPT,

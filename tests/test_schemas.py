@@ -1,6 +1,8 @@
 import pytest
 from pydantic import ValidationError
+
 from app.schemas import ChatRequest
+
 
 def user(text): return {"role": "user", "content": text}
 def bot(text): return {"role": "assistant", "content": text}

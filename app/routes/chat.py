@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
-from app.schemas import ChatRequest
-from app.core.rate_limit import limiter 
+
 from app.config import settings
+from app.core.rate_limit import limiter
+from app.schemas import ChatRequest
 from app.services.llm import stream_reply
 
 router = APIRouter()

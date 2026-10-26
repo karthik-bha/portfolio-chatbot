@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
-from main import app
+
 import app.routes.chat as chat_module
+from main import app
 
 client = TestClient(app)
 
