@@ -1,17 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from slowapi import _rate_limit_exceeded_handler
+
+# pyrefly: ignore [missing-import]
 from slowapi.errors import RateLimitExceeded
 
 from app.config import settings
-from app.core.rate_limit import limiter
+from app.core.rate_limit import limiter, rate_limit_exceeded_handler
 from app.routes.chat import router as chat_router
 from app.routes.health import router as health_router
 
 app = FastAPI()
 
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler) # type: ignore[arg-type]
+app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)  # type: ignore[arg-type]
 
 app.add_middleware(
     CORSMiddleware,
